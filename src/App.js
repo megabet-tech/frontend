@@ -1,14 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home";
 import DrawLive from "./pages/live";
+import DefaultLayout from "./layouts";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/app" element={<HomePage />} />
-        <Route path="/" element={<DrawLive />} />
-      </Routes>
+      <DefaultLayout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/live" element={<DrawLive />} />
+        </Routes>
+      </DefaultLayout>
     </>
   );
 }

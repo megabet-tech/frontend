@@ -1,0 +1,14 @@
+.menu-button-icon {
+  width: 24px;
+  height: 24px;
+}
+.menu-button {
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+}
+.navbar-logo {
+  width: 90px;
+  height: 55px;
+}
