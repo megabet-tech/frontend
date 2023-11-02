@@ -7,7 +7,7 @@ import gmodeBG from "assets/gmode.png";
 import skewer2BG from "assets/skewer2.png";
 import skewer3BG from "assets/skewer3.png";
 import skewer4BG from "assets/skewer4.png";
-
+import { initMegaBetMainContract, play } from "utils/blockchain/zksync/model/megabet-main";
 const modeList = [
   {
     name: "S-MODE",
@@ -35,6 +35,17 @@ const SGMode = () => {
   const listBetNumber = Array.from({ length: 99 });
   const [betNumber, setBetNumber] = useState([]);
   const [betValue, setBetValue] = useState(null);
+
+  const playBet = async () => {
+    console.log('Play bet');
+    await initMegaBetMainContract();
+    const betSessionId = 1;
+    const luckyNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const mode = 1;
+    const betAmount = '100000';
+    await play(betSessionId, luckyNumbers, mode, betAmount);
+  }
+
   return (
     <Flex direction="column" className="play-mode-container">
       <Flex>
@@ -69,10 +80,10 @@ const SGMode = () => {
         <Input
           value={betValue}
           mt="12px"
-          onChange={(event) => console.log(event.target.value)}
+          onChange={(event) => {console.log(event.target)}}
           type="number"
         />
-        <Button mt="12px">Confirm</Button>
+        <Button mt="12px" onClick={() => playBet()}>Confirm</Button>
       </Flex>
     </Flex>
   );
