@@ -6,19 +6,13 @@ const DefaultLayout = ({ children }) => {
     <Box
       background="#FFF"
       sx={{
-        paddingTop: "8 px",
         minHeight: "100vh",
       }}
       //   bgImage={BackgroundImage}
       bgSize="cover"
     >
       <Navbar />
-      <Box
-        w="calc(100vw - 24px)"
-        mx="auto"
-        sx={{ paddingTop: "12px" }}
-        overflow="auto"
-      >
+      <Box w="calc(100vw - 24px)" mx="auto" overflow="auto">
         {children}
       </Box>
     </Box>

@@ -1,0 +1,53 @@
+.home-container {
+  height: calc(100vh - 54px);
+  padding-top: 18px;
+}
+.home-banner {
+  aspect-ratio: 2.6;
+  background: gray;
+  border-radius: 8px;
+}
+.home-play-mode-button {
+  background-size: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.home-play-mode-button:first-child {
+  margin-top: 0px;
+}
+.home-result-container {
+  aspect-ratio: 0.5;
+  background-size: cover;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-result-circle-container {
+  width: 100%;
+  aspect-ratio: 1;
+  justify-content: center;
+  align-items: center;
+}
+.home-result-circle {
+  width: 72%;
+  aspect-ratio: 1;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+}
+.home-result-circle-text {
+  color: #fff !important;
+  font-size: 48px;
+  text-align: center;
+  font-weight: 700;
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+.yesterday-result-title {
+  color: #fff !important;
+  font-weight: 700;
+}
+.home-yesterday-result-container {
+  padding-top: 12px;
+}

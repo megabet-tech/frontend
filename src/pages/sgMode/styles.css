@@ -1,0 +1,36 @@
+.play-mode-container {
+  padding-top: 20px;
+}
+.play-mode-image {
+  flex: 2;
+  aspect-ratio: 2;
+  background-size: cover;
+  border-radius: 4px;
+}
+.play-mode-guide {
+  flex: 3;
+  padding-left: 8px;
+}
+.guide-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+.guide-content {
+  font-size: 12px;
+  font-weight: 400;
+  color: #8a8a8a !important;
+}
+.bet-number-container {
+  background: #d1d0d0;
+  aspect-ratio: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.bet-number-container.selected {
+  background: #7301b6;
+}

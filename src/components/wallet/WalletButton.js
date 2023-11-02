@@ -13,7 +13,7 @@ import { useWallet } from "contexts/useWallet";
 import { useState } from "react";
 import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 import { BiWalletAlt } from "react-icons/bi";
-import { useAccount } from "wagmi";
+import { useAccount, useSwitchNetwork } from "wagmi";
 import "./walletButton.css";
 import { addressShortener } from "utils";
 import WalletAccount from "./WalletAccount";
@@ -72,6 +72,9 @@ const WalletButton = (props) => {
   const { currentAccount } = useWallet();
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   const confirmAlertDisclosure = useDisclosure();
+
+  const { chains, error, isLoading, pendingChainId, switchNetwork } =
+    useSwitchNetwork();
 
   return (
     <Flex direction="column">

@@ -1,7 +1,7 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { supportedChain } from "constants";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
 
 const WalletContext = createContext();
 
@@ -13,7 +13,6 @@ export const WalletProvider = ({ children }) => {
   const [currentExtensions, setCurrentExtensions] = useState([]);
   const [walletAccounts, setWalletAccounts] = useState(null);
   const [network, setNetwork] = useState(null);
-  console.log(selectedNetworkId);
 
   const updateNetwork = async (networkKey) => {
     setNetwork(networkKey);
