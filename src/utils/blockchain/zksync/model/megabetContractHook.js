@@ -1,6 +1,7 @@
 import MegaBetMainContractAbi from "utils/blockchain/contracts/megabet-main";
 import { parseEther } from "viem";
 import {
+  useAccount,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
@@ -10,22 +11,19 @@ import * as ethers from "ethers";
 
 export const useMegabetContract = ({ fn }) => {
   const deployMode = "testnet";
-  const { config: contractConfig } = usePrepareContractWrite({
+  const { address } = useAccount();
+
+  const { data, error, isError, write } = useContractWrite({
     address: config[deployMode].contract_address.megabet_main,
     abi: MegaBetMainContractAbi.abi,
     functionName: fn,
   });
-  const { data, error, isError, write } = useContractWrite(config);
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
+  //   const { isLoading, isSuccess } = useWaitForTransaction({
+  //     hash: data?.hash,
+  //   });
   const playBetContract = (betSessionId, luckyNumbers, mode, betAmount) => {
-    // write({
-    //   args: [betSessionId, luckyNumbers, mode, betAmount],
-    //   from: "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-    //   value: parseEther("0.01"),
-    // });
     write({
+      address,
       args: [betSessionId, luckyNumbers, mode, betAmount],
       value: parseEther("0.01"),
     });

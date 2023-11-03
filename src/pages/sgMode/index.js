@@ -26,9 +26,8 @@ const modeList = [
 const SGMode = () => {
   const localtion = useLocation();
   // call hook for contract function
-  const playContractCall = useMegabetContract("play");
+  const playContractCall = useMegabetContract({ fn: "play" });
   // define another function here in case there more than 1 contract function need to be call in one component
-  const pauseContractCall = useMegabetContract("pause");
 
   const playMode = useMemo(() => {
     return modeList.find(
