@@ -44,7 +44,7 @@ const SGMode = () => {
     const betSessionId = 1;
     const luckyNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const mode = 1;
-    const betAmount = "100000";
+    const betAmount = "0.000000000001";
     // call contract function here
     await playContractCall.playBetContract(
       betSessionId,

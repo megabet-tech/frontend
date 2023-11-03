@@ -22,10 +22,11 @@ export const useMegabetContract = ({ fn }) => {
   //     hash: data?.hash,
   //   });
   const playBetContract = (betSessionId, luckyNumbers, mode, betAmount) => {
+    const value = ethers.BigNumber.from(parseEther(betAmount)).mul(luckyNumbers.length);
     write({
       address,
-      args: [betSessionId, luckyNumbers, mode, betAmount],
-      value: parseEther("0.01"),
+      args: [betSessionId, luckyNumbers, mode, parseEther(betAmount)],
+      value: value,
     });
   };
   // define another function here
