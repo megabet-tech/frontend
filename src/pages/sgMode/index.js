@@ -1,13 +1,11 @@
-import { Box, Button, Flex, Input, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Input, SimpleGrid, Text } from "@chakra-ui/react";
+import gmodeBG from "assets/gmode.png";
+import smodeBG from "assets/smode.png";
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { initMegaBetMainContract } from "utils/blockchain/zksync/model/megabet-main";
+import { useMegabetContract } from "utils/blockchain/zksync/model/megabetContractHook";
 import "./styles.css";
-import smodeBG from "assets/smode.png";
-import gmodeBG from "assets/gmode.png";
-import skewer2BG from "assets/skewer2.png";
-import skewer3BG from "assets/skewer3.png";
-import skewer4BG from "assets/skewer4.png";
-import { initMegaBetMainContract, play } from "utils/blockchain/zksync/model/megabet-main";
 const modeList = [
   {
     name: "S-MODE",
@@ -27,6 +25,11 @@ const modeList = [
 
 const SGMode = () => {
   const localtion = useLocation();
+  // call hook for contract function
+  const playContractCall = useMegabetContract("play");
+  // define another function here in case there more than 1 contract function need to be call in one component
+  const pauseContractCall = useMegabetContract("pause");
+
   const playMode = useMemo(() => {
     return modeList.find(
       (e) => e.key == localtion.pathname.replace("/play/", "")
@@ -37,14 +40,20 @@ const SGMode = () => {
   const [betValue, setBetValue] = useState(null);
 
   const playBet = async () => {
-    console.log('Play bet');
+    console.log("Play bet");
     await initMegaBetMainContract();
     const betSessionId = 1;
     const luckyNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const mode = 1;
-    const betAmount = '100000';
-    await play(betSessionId, luckyNumbers, mode, betAmount);
-  }
+    const betAmount = "100000";
+    // call contract function here
+    await playContractCall.playBetContract(
+      betSessionId,
+      luckyNumbers,
+      mode,
+      betAmount
+    );
+  };
 
   return (
     <Flex direction="column" className="play-mode-container">
@@ -80,10 +89,12 @@ const SGMode = () => {
         <Input
           value={betValue}
           mt="12px"
-          onChange={(event) => {console.log(event.target)}}
+          onChange={(event) => setBetValue(event.target.value)}
           type="number"
         />
-        <Button mt="12px" onClick={() => playBet()}>Confirm</Button>
+        <Button mt="12px" onClick={() => playBet()}>
+          Confirm
+        </Button>
       </Flex>
     </Flex>
   );
