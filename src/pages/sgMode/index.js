@@ -3,9 +3,18 @@ import gmodeBG from "assets/gmode.png";
 import smodeBG from "assets/smode.png";
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { initMegaBetMainContract } from "utils/blockchain/zksync/model/megabet-main";
-import { useMegabetContract } from "utils/blockchain/zksync/model/megabetContractHook";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import "./styles.css";
+import ZksyncConfig from "utils/blockchain/zksync/config";
+import MegaBetMainContractAbi from "utils/blockchain/contracts/megabet-main";
+import { parseEther } from "viem";
+import * as ethers from "ethers";
+
 const modeList = [
   {
     name: "S-MODE",
@@ -25,9 +34,6 @@ const modeList = [
 
 const SGMode = () => {
   const localtion = useLocation();
-  // call hook for contract function
-  const playContractCall = useMegabetContract({ fn: "play" });
-  // define another function here in case there more than 1 contract function need to be call in one component
 
   const playMode = useMemo(() => {
     return modeList.find(
@@ -38,21 +44,24 @@ const SGMode = () => {
   const [betNumber, setBetNumber] = useState([]);
   const [betValue, setBetValue] = useState(null);
 
-  const playBet = async () => {
-    console.log("Play bet");
-    await initMegaBetMainContract();
-    const betSessionId = 1;
-    const luckyNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const mode = 1;
-    const betAmount = "0.000000000001";
-    // call contract function here
-    await playContractCall.playBetContract(
-      betSessionId,
-      luckyNumbers,
-      mode,
-      betAmount
-    );
-  };
+  const { 
+    config, 
+    error: prepareError,
+    isError: isPrepareError,
+  } = usePrepareContractWrite({
+    address: ZksyncConfig['testnet'].contract_address.megabet_main,
+    abi: MegaBetMainContractAbi.abi,
+    functionName: 'play',
+    args: [1, [1,2,3,4, 5,6,7,8,9,10], 1, "100000"],
+    value: ethers.utils.parseEther("0.000000000001"),
+  });
+
+  const { data, error, isError, write } = useContractWrite(config); 
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  
 
   return (
     <Flex direction="column" className="play-mode-container">
@@ -91,8 +100,8 @@ const SGMode = () => {
           onChange={(event) => setBetValue(event.target.value)}
           type="number"
         />
-        <Button mt="12px" onClick={() => playBet()}>
-          Confirm
+        <Button mt="12px" disabled={!write || isLoading}>
+          {isLoading ? 'Confirming...' : 'Confirmed'}
         </Button>
       </Flex>
     </Flex>

@@ -1,4 +1,4 @@
-const config = {
+const ZksyncConfig = {
     testnet: {
         contract_address: {
             megabet_token: "0xc1Bf6B65d41ffE6A3B85986c2C096BFebaEf40Ae",
@@ -16,4 +16,4 @@ const config = {
     
 };
 
-export default config;
+export default ZksyncConfig;
